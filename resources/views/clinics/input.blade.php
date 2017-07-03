@@ -58,3 +58,10 @@
     </div>
 </div>
 @endsection
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#cliniccode').focus();
+        });
+    </script>
+@endsection

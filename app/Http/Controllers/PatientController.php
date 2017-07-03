@@ -93,7 +93,7 @@ class PatientController extends Controller
             'patientpin'=>'required|min:6|max:6',
             // 'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
             // 'phonealternate'=>'required|digits:10|unique:patients,phonealternate',
-            'idproof' => 'digits:12',
+            'idproof' => 'digits:12|unique:patients,idproof',
             'phoneprimary'=>'required|digits:10',
             'phonealternate'=>'required|digits:10',
             'email'=>'email'
@@ -112,7 +112,9 @@ class PatientController extends Controller
             'idproof.digits'=>'Aadhar number needs to contain 12 digits',
             // 'phonealternate.unique'=>'Patient with this phone number is already registered',
             'dob.date'=>'The Date of Birth should be in mm/dd/yyyy format.',
-            'dob.before'=>'The Date of Birth cannot be later than the date today.'
+            'dob.before'=>'The Date of Birth cannot be later than the date today.',
+            'idproof.digits'=>'Invalid Aadhar Number',
+            'idproof.unique'=>'Aadhar number already exists'
             ]);
         }else{
         $this->validate($request,[
@@ -129,6 +131,7 @@ class PatientController extends Controller
             'patientpin'=>'required|min:6|max:6',
             // 'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
             // 'phonealternate'=>'required|digits:10|unique:patients,phonealternate',
+            'idproof' => 'digits:12|unique:patients,idproof',
             'phoneprimary'=>'required|digits:10',
             'phonealternate'=>'required|digits:10',
             'email'=>'email'
@@ -142,7 +145,9 @@ class PatientController extends Controller
             'phoneprimary.digits'=>'Phone number needs to contain 10 digits',
             //'phoneprimary.unique'=>'Patient with this phone number is already registered',
             'dob.date'=>'The Date of Birth should be in mm/dd/yyyy format.',
-            'dob.before'=>'The Date of Birth cannot be later than the date today.'
+            'dob.before'=>'The Date of Birth cannot be later than the date today.',
+            'idproof.digits'=>'Invalid Aadhar Number',
+            'idproof.unique'=>'Aadhar number already exists'
             ]);
             }
 
