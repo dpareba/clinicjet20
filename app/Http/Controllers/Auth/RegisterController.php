@@ -66,8 +66,10 @@ class RegisterController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'phone' => 'required|min:10|max:10',
-            'pan' => 'min:10|max:10',
+            'pan' => 'min:10|max:10|unique:users,pan',
             'doctype' => 'required'
+            ],[
+            'pan.unique'=>'A User with this PAN Number already exists!'
             ]);
        }else{
         return Validator::make($data, [
@@ -75,11 +77,12 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'phone' => 'required|min:10|max:10',
-            'pan' => 'required|min:10|max:10',
+            'pan' => 'required|min:10|max:10|unique:users,pan',
             'doctype' => 'required',
             'speciality' => 'required'
             ],[
-            'pan.required' => 'PAN Number is required'
+            'pan.required' => 'PAN Number is required',
+            'pan.unique'=>'A User with this PAN Number already exists!'
             ]);
     }
 
