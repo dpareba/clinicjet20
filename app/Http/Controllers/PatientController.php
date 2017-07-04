@@ -18,6 +18,7 @@ use Charts;
 use App\Visit;
 use App\Template;
 use App\Slot;
+use Validator;
 
 
 class PatientController extends Controller
@@ -75,7 +76,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        dd($request);
         if ($request->cbage == "on") {
             $this->validate($request,[
             'approxage'=>'required',
@@ -94,7 +95,7 @@ class PatientController extends Controller
             // 'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
             // 'phonealternate'=>'required|digits:10|unique:patients,phonealternate',
             'idproof' => 'digits:12|unique:patients,idproof',
-            'phoneprimary'=>'required|digits:10',
+            'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
             'phonealternate'=>'required|digits:10',
             'email'=>'email'
             ],[
@@ -106,7 +107,7 @@ class PatientController extends Controller
             'allergies.required'=>'Please enter know allergies.Enter Not known otherwise.',
             'phoneprimary.required'=>'Primary Phone Number is compulsory',
             'phoneprimary.digits'=>'Phone number needs to contain 10 digits',
-            // 'phoneprimary.unique'=>'Patient with this phone number is already registered',
+            'phoneprimary.unique'=>'Patient with this phone number is already registered',
             'phonealternate.required'=>'Emergency Phone Number is compulsory',
             'phonealternate.digits'=>'Phone number needs to contain 10 digits',
             'idproof.digits'=>'Aadhar number needs to contain 12 digits',
@@ -129,10 +130,9 @@ class PatientController extends Controller
             'patientstate'=>'required',
             'patientcity'=>'required',
             'patientpin'=>'required|min:6|max:6',
-            // 'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
-            // 'phonealternate'=>'required|digits:10|unique:patients,phonealternate',
+            
             'idproof' => 'digits:12|unique:patients,idproof',
-            'phoneprimary'=>'required|digits:10',
+            'phoneprimary'=>'required|digits:10|unique:patients,phoneprimary',
             'phonealternate'=>'required|digits:10',
             'email'=>'email'
             ],[
@@ -143,13 +143,14 @@ class PatientController extends Controller
             'allergies.required'=>'Please enter know allergies.Enter Not known otherwise.',
             'phoneprimary.required'=>'Primary Phone Number is compulsory',
             'phoneprimary.digits'=>'Phone number needs to contain 10 digits',
-            //'phoneprimary.unique'=>'Patient with this phone number is already registered',
+            'phoneprimary.unique'=>'Patient with this phone number is already registered',
             'dob.date'=>'The Date of Birth should be in mm/dd/yyyy format.',
             'dob.before'=>'The Date of Birth cannot be later than the date today.',
             'idproof.digits'=>'Invalid Aadhar Number',
             'idproof.unique'=>'Aadhar number already exists'
             ]);
             }
+
 
         //$cliniccode = Session::get('cliniccode');
         $clinic = Clinic::where(['cliniccode'=>Session::get('cliniccode')])->first();
@@ -193,6 +194,7 @@ class PatientController extends Controller
         $patient->patientcode = rand(1000,9999);
         $patient->idproof = $request->idproof;
         $patient->created_by = Auth::user()->id;
+         
         $patient->save();
         $patient->clinics()->attach($clinic);
 

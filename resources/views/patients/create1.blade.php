@@ -22,12 +22,17 @@ Register new patients in clinic
 					<input type="hidden" name="_token" value="{{csrf_token()}}">
 
 					<div class="row">
-						<div class="col-md-4 col-xs-12" style="text-align: center;">
+						<input type="hidden" id="test" name="test" value="Dilip">
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4  col-xs-12" style="text-align: center;">
 							<div class="form-group {{ $errors->has('name')?'has-error':''}}">
-								<label class="control-label" for="name" >First Name</label>
+								<label class="control-label" for="name" >Full Name</label>
 								<div class="input-group">
 									<span class="input-group-addon" style="color: #3c8dbc;background-color:#FFFFFF;"><i class="fa fa-id-badge"></i></span>
-									<input event.preventDefault(); style="text-transform: uppercase;text-align: center;" required="" value="{{old('name')}}" autofocus="" type="text" class="form-control" maxlength="255" id="name" name="name" placeholder="First Name"  data-parsley-required-message="Patient Name cannot be left blank">
+									<input event.preventDefault(); style="text-transform: uppercase;text-align: center;" required="" value="{{old('name')}}" autofocus="" type="text" class="form-control" maxlength="255" id="name" name="name" placeholder="Patient Full Name"  data-parsley-required-message="Patient Name cannot be left blank">
 								</div>
 
 								<span class="help-block">{{$errors->first('name')}}</span>
@@ -43,7 +48,7 @@ Register new patients in clinic
 								</div>
 
 								<span class="help-block">{{$errors->first('midname')}}</span>
-							</div>{{-- .middle name div --}}
+							</div>
 						</div>
 						<div class="col-md-4 col-xs-12" style="text-align: center;">
 							<div class="form-group {{ $errors->has('surname')?'has-error':''}}">
@@ -54,7 +59,7 @@ Register new patients in clinic
 								</div>
 
 								<span class="help-block">{{$errors->first('surname')}}</span>
-							</div>{{-- .last name div --}}
+							</div>
 						</div>
 						
 					</div>{{-- .row --}}
@@ -307,6 +312,15 @@ Register new patients in clinic
 
     });
 
+  	$('#name').on('input',function(){
+  		$('#test').val('');
+  		$nameval = $('#name').val().trim();
+  		$midval = $('#midname').val().trim();
+  		$surname = $('#surname').val().trim();
+  		$finalname = $nameval + ' ' + $midval + ' ' + $surname;
+  		$('#test').val($finalname);
+  		console.log($finalname);
+  	});
 });
 </script>
 @stop
