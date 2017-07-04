@@ -76,7 +76,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        //dd($request);
         if ($request->cbage == "on") {
             $this->validate($request,[
             'approxage'=>'required',
@@ -84,6 +84,8 @@ class PatientController extends Controller
             //'midname'=>'required|max:255',
             'midname'=>'max:255',
             'surname'=>'required|max:255',
+            'namemidsur'=>'required|unique:patients,namemidsur',
+            'namesur'=>'required'
             'dob'=>'date_format:d/m/Y|before:tomorrow',
             'gender'=>'required|max:6',
             'bloodgroup'=>'required|max:10',
@@ -158,9 +160,11 @@ class PatientController extends Controller
         //$clinic = Clinic::find($clinicid);
        // dd($clinic);
         $patient = new Patient;
-        $patient->name = Str::upper($request->name);
-        $patient->midname = Str::upper($request->midname);
-        $patient->surname = Str::upper($request->surname);
+        $patient->name = trim(Str::upper($request->name));
+        $patient->midname = trim(Str::upper($request->midname));
+        $patient->surname = trim(Str::upper($request->surname));
+        $patient->namemidsur = $request->namemidsur;
+        $patient->namesur = $request->namesur;
         if ($request->dob == "") {
             $input = '01/01/1900';
         }else{
